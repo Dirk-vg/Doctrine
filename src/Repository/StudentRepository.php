@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\Address;
 use App\Entity\Student;
+use App\Entity\Teacher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**

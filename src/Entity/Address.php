@@ -2,21 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\AddressRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=AddressRepository::class)
+ * @ORM\Embeddable()
  */
 class Address
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -37,9 +29,19 @@ class Address
      */
     private $zipcode;
 
-    public function getId(): ?int
+    /**
+     * Address constructor.
+     * @param $street
+     * @param $streetNumber
+     * @param $city
+     * @param $zipcode
+     */
+    public function __construct($street, $streetNumber, $city, $zipcode)
     {
-        return $this->id;
+        $this->street = $street;
+        $this->streetNumber = $streetNumber;
+        $this->city = $city;
+        $this->zipcode = $zipcode;
     }
 
     public function getStreet(): ?string
@@ -88,5 +90,15 @@ class Address
         $this->zipcode = $zipcode;
 
         return $this;
+    }
+
+    public function toArray()
+    {
+        return [
+            'street' => $this->getStreet(),
+            'streetNumber' => $this->getStreetNumber(),
+            'city' => $this->getCity(),
+            'zipcode' => $this->getZipcode()
+        ];
     }
 }

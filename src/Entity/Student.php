@@ -1,92 +1,91 @@
 <?php
+declare(strict_types = 1);
 
-namespace App\Entity;
-
-use App\Repository\StudentRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=StudentRepository::class)
+ * @ORM\Entity
+ * @ORM\Table('students')
  */
 class Student
 {
     /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
+     * @ORM\Id
      * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue *
      */
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string") **/
     private $firstName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string") **/
     private $lastName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Column(type="string") **/
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    /** @ORM\Embedded(class="Address") */
     private $address;
 
-    public function getId(): ?int
+    /**
+     * One teacher has many students. This is the inverse side.
+     * @ORM\OneToMany(targetEntity="Teacher", mappedBy="teacher")
+     */
+    private $teacher;
+
+    public function getId() :? int
     {
         return $this->id;
     }
 
-    public function getFirstName(): ?string
+    public function getFirstName() : string
     {
         return $this->firstName;
     }
 
-    public function setFirstName(string $firstName): self
+    public function setFirstName(string $firstName)
     {
         $this->firstName = $firstName;
-
-        return $this;
     }
 
-    public function getLastName(): ?string
+    public function getLastName() : string
     {
         return $this->lastName;
     }
 
-    public function setLastName(string $lastName): self
+    public function setLastName(string $lastName)
     {
         $this->lastName = $lastName;
-
-        return $this;
     }
 
-    public function getEmail(): ?string
+    public function getEmail() : string
     {
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
         $this->email = $email;
-
-        return $this;
     }
 
-    public function getAddress(): ?string
+    public function getTeacher() : Teacher
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(Teacher $teacher)
+    {
+        $this->teacher = $teacher;
+    }
+
+    public function getAddress() : Address
     {
         return $this->address;
     }
 
-    public function setAddress(string $address): self
+    public function setAddress(Address $address)
     {
         $this->address = $address;
-
-        return $this;
     }
 }
